@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
 import SidebarLinkGroup from "./SidebarLinkGroup";
+import logo from "../images/logo.png";
 
 function Sidebar({ sidebarOpen, setSidebarOpen }) {
   const location = useLocation();
@@ -52,21 +53,18 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
 
   return (
     <div>
-      {/* Sidebar backdrop (mobile only) */}
       <div
-        className={`fixed inset-0 bg-slate-900 bg-opacity-30 z-40 lg:hidden lg:z-auto transition-opacity duration-200 ${
-          sidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
+        className={`fixed inset-0 bg-slate-900 bg-opacity-30 z-40 lg:hidden lg:z-auto transition-opacity duration-200 ${sidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
         aria-hidden="true"
       ></div>
 
-      {/* Sidebar */}
+
       <div
         id="sidebar"
         ref={sidebar}
-        className={`flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-screen overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:!w-64 shrink-0 bg-slate-800 p-4 transition-all duration-200 ease-in-out ${
-          sidebarOpen ? "translate-x-0" : "-translate-x-64"
-        }`}
+        className={`flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-screen overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:!w-64 shrink-0 bg-slate-800 p-4 transition-all duration-200 ease-in-out ${sidebarOpen ? "translate-x-0" : "-translate-x-64"
+          }`}
       >
         {/* Sidebar header */}
         <div className="flex justify-between mb-10 pr-3 sm:px-2">
@@ -89,49 +87,45 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
           </button>
           {/* Logo */}
           <NavLink end to="/" className="block">
-            <svg width="32" height="32" viewBox="0 0 32 32">
-              <defs>
-                <linearGradient
-                  x1="28.538%"
-                  y1="20.229%"
-                  x2="100%"
-                  y2="108.156%"
-                  id="logo-a"
-                >
-                  <stop stopColor="#A5B4FC" stopOpacity="0" offset="0%" />
-                  <stop stopColor="#A5B4FC" offset="100%" />
-                </linearGradient>
-                <linearGradient
-                  x1="88.638%"
-                  y1="29.267%"
-                  x2="22.42%"
-                  y2="100%"
-                  id="logo-b"
-                >
-                  <stop stopColor="#38BDF8" stopOpacity="0" offset="0%" />
-                  <stop stopColor="#38BDF8" offset="100%" />
-                </linearGradient>
-              </defs>
-              <rect fill="#6366F1" width="32" height="32" rx="16" />
-              <path
-                d="M18.277.16C26.035 1.267 32 7.938 32 16c0 8.837-7.163 16-16 16a15.937 15.937 0 01-10.426-3.863L18.277.161z"
-                fill="#4F46E5"
-              />
-              <path
-                d="M7.404 2.503l18.339 26.19A15.93 15.93 0 0116 32C7.163 32 0 24.837 0 16 0 10.327 2.952 5.344 7.404 2.503z"
-                fill="url(#logo-a)"
-              />
-              <path
-                d="M2.223 24.14L29.777 7.86A15.926 15.926 0 0132 16c0 8.837-7.163 16-16 16-5.864 0-10.991-3.154-13.777-7.86z"
-                fill="url(#logo-b)"
-              />
-            </svg>
+            <div className="inline-flex justify-center items-center">
+              <img src={logo} alt="Logo" />
+              <span className="text-field text-white mt-2">
+                LEAK-PROOF® ENGINEERING
+              </span>
+            </div>
           </NavLink>
         </div>
-
-        {/* Links */}
         <div className="space-y-8">
-          {/* Pages group */}
+          <div>
+            <SidebarLinkGroup activecondition={pathname === "/"}>
+              {() => {
+                return (
+                  <React.Fragment>
+                    <a
+                      href="/"
+                      className={`block text-slate-200 truncate transition duration-150 ${pathname === "/"
+                        ? "hover:text-slate-200"
+                        : "hover:text-white"
+                        }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center">
+                          <i className="fas fa-home text-lg"></i>
+                          <span
+                            className={`font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200 ${pathname === "/" ? "font-bold underline" : ""
+                              }`}
+                          >
+                            Home
+                          </span>
+                        </div>
+                      </div>
+                    </a>
+                  </React.Fragment>
+                );
+              }}
+            </SidebarLinkGroup>
+          </div>
+
           <div>
             <h3 className="text-xs uppercase text-slate-500 font-semibold pl-3">
               <span
@@ -140,24 +134,24 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
               >
                 •••
               </span>
+
               <span className="lg:hidden lg:sidebar-expanded:block 2xl:block">
                 Pages
               </span>
             </h3>
             <ul className="mt-3">
               <SidebarLinkGroup
-                activecondition={pathname === "/" || pathname.includes("sales")}
+                activecondition={pathname.includes("sales")}
               >
                 {() => {
                   return (
                     <React.Fragment>
                       <a
                         href="/sales"
-                        className={`block text-slate-200 truncate transition duration-150 ${
-                          pathname === "/" || pathname.includes("sales")
-                            ? "hover:text-slate-200"
-                            : "hover:text-white"
-                        }`}
+                        className={`block text-slate-200 truncate transition duration-150 ${pathname === "/" || pathname.includes("sales")
+                          ? "hover:text-slate-200"
+                          : "hover:text-white"
+                          }`}
                       >
                         <div className="flex items-center justify-between">
                           <div className="flex items-center">
@@ -174,7 +168,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
               </SidebarLinkGroup>
               <SidebarLinkGroup
                 activecondition={
-                  pathname === "/" || pathname.includes("application")
+                   pathname.includes("application")
                 }
               >
                 {() => {
@@ -182,11 +176,10 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                     <React.Fragment>
                       <a
                         href="/application"
-                        className={`block text-slate-200 truncate transition duration-150 ${
-                          pathname === "/" || pathname.includes("application")
-                            ? "hover:text-slate-200"
-                            : "hover:text-white"
-                        }`}
+                        className={`block text-slate-200 truncate transition duration-150 ${pathname.includes("application")
+                          ? "hover:text-slate-200"
+                          : "hover:text-white"
+                          }`}
                       >
                         <div className="flex items-center justify-between">
                           <div className="flex items-center">
@@ -201,104 +194,105 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                   );
                 }}
               </SidebarLinkGroup>
-              <SidebarLinkGroup activecondition={pathname === "/"}>
-                {() => {
-                  const [designOpen, setDesignOpen] = useState(false);
-                  const [drfOpen, setDrfOpen] = useState(false);
-                  const handleDesignClick = () => {
-                    if (designOpen) {
-                      setDrfOpen(false);
-                    }
-                    setDesignOpen(!designOpen);
-                  };
+              <SidebarLinkGroup activecondition={pathname.includes("/drf/standard")}>
+      {() => {
+        // Automatically open the "Design" and "D.R.F" sections if the pathname matches "/drf/standard"
+        const [designOpen, setDesignOpen] = useState(pathname.includes("/drf/standard"));
+        const [drfOpen, setDrfOpen] = useState(pathname.includes("/drf/standard"));
 
-                  const handleDrfClick = (e) => {
-                    e.preventDefault();
-                    if (!designOpen) {
-                      return;
-                    }
-                    setDrfOpen(!drfOpen);
-                  };
+        // Ensure that "Design" and "D.R.F" state is updated when pathname changes
+        useEffect(() => {
+          setDesignOpen(pathname.includes("/drf/standard"));
+          setDrfOpen(pathname.includes("/drf/standard"));
+        }, [pathname]);
 
-                  return (
-                    <React.Fragment>
-                      <a
-                        href="#0"
-                        className={`text-slate-200 truncate transition duration-150 ${
-                          pathname === "/"
-                            ? "hover:text-slate-200"
-                            : "hover:text-white"
-                        }`}
-                        onClick={handleDesignClick}
-                      >
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center">
-                            <i className="fas fa-pen-ruler"></i>
-                            <span className="font-medium ml-3">Design</span>
-                          </div>
-                          <div className="flex shrink-0 ml-2">
-                            <i
-                              className={`fas ${
-                                designOpen ? "fa-chevron-up" : "fa-chevron-down"
-                              } align-text-bottom float-right`}
-                            ></i>
-                          </div>
-                        </div>
-                      </a>
-                      <div
-                        className={`lg:hidden lg:sidebar-expanded:block 2xl:block ${
-                          !designOpen && "hidden"
-                        }`}
-                      >
-                        <ul className={`pl-9 mt-1`}>
-                          <li className="mb-1 last:mb-0">
-                            <a
-                              href="#0"
-                              onClick={handleDrfClick}
-                              className={`${
-                                !designOpen && "hidden"
-                              } text-slate-400 hover:text-slate-200 transition duration-150 truncate `}
-                            >
-                              <i className="fas fa-list align-text-bottom"></i>{" "}
-                              &nbsp; D.R.F
-                              <i
-                                className={`fas ${
-                                  drfOpen ? "fa-chevron-up" : "fa-chevron-down"
-                                } align-text-bottom float-right`}
-                              ></i>
-                            </a>
-                            <ul className={`pl-4 ${!drfOpen && "hidden"}`}>
-                              {[
-                                "Standard",
-                                "New",
-                                "Edit",
-                                "New Design",
-                                "Checked",
-                                "Approved",
-                              ].map((item) => (
-                                <li key={item} className="mb-1 last:mb-0">
-                                  <NavLink
-                                    to={`/drf/${item
-                                      .toLowerCase()
-                                      .replace(/\s+/g, "-")}`}
-                                    className="block text-slate-400 hover:text-slate-200 transition duration-150 truncate m-1"
-                                  >
-                                    <i className="fa-solid fa-circle-dot align-text-bottom"></i>
-                                    &nbsp;&nbsp;{item}
-                                  </NavLink>
-                                </li>
-                              ))}
-                            </ul>
-                          </li>
-                        </ul>
-                      </div>
-                    </React.Fragment>
-                  );
-                }}
-              </SidebarLinkGroup>
+        const handleDesignClick = () => {
+          setDesignOpen(!designOpen);
+          // Optionally close "D.R.F" when "Design" is closed
+          if (!designOpen) {
+            setDrfOpen(false);
+          }
+        };
+
+        const handleDrfClick = (e) => {
+          e.preventDefault();
+          // Only toggle "D.R.F" if "Design" is open
+          if (designOpen) {
+            setDrfOpen(!drfOpen);
+          }
+        };
+
+        return (
+          <React.Fragment>
+            <a
+              href="#0" // Use '#' or 'javascript:void(0)' is discouraged
+              className={`text-slate-200 truncate transition duration-150 ${pathname.includes("/drf/standard")
+                ? "hover:text-slate-200"
+                : "hover:text-white"
+                }`}
+              onClick={handleDesignClick}
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <i className="fas fa-pen-ruler"></i>
+                  <span className="font-medium ml-3">Design</span>
+                </div>
+                <div className="flex shrink-0 ml-2">
+                  <i
+                    className={`fas ${designOpen ? "fa-chevron-up" : "fa-chevron-down"
+                      } align-text-bottom float-right`}
+                  ></i>
+                </div>
+              </div>
+            </a>
+            <div
+              className={`lg:hidden lg:sidebar-expanded:block 2xl:block ${!designOpen && "hidden"
+                }`}
+            >
+              <ul className={`pl-9 mt-1`}>
+                <li className="mb-1 last:mb-0">
+                  <a
+                    href="#0" // Again, using '#' for consistency and accessibility
+                    onClick={handleDrfClick}
+                    className={`${!designOpen && "hidden"
+                      } text-slate-400 hover:text-slate-200 transition duration-150 truncate `}
+                  >
+                    <i className="fas fa-list align-text-bottom"></i>{" "}
+                    &nbsp; D.R.F
+                    <i
+                      className={`fas ${drfOpen ? "fa-chevron-up" : "fa-chevron-down"
+                        } align-text-bottom float-right`}
+                    ></i>
+                  </a>
+                  <ul className={`pl-4 ${!drfOpen && "hidden"}`}>
+                    {[
+                      "Standard",
+                      "New",
+                      "Edit",
+                      "New Design",
+                      "Checked",
+                      "Approved",
+                    ].map((item) => (
+                      <li key={item} className="mb-1 last:mb-0">
+                        <NavLink
+                          to={`/drf/${item.toLowerCase().replace(/\s+/g, "-")}`}
+                          className={({ isActive }) => isActive ? "block text-slate-200 hover:text-slate-200 transition duration-150 truncate m-1 font-bold underline" : "block text-slate-400 hover:text-slate-200 transition duration-150 truncate m-1"}
+                        >
+                          <i className="fa-solid fa-circle-dot align-text-bottom"></i>
+                          &nbsp;&nbsp;{item}
+                        </NavLink>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </React.Fragment>
+        );
+      }}
+    </SidebarLinkGroup>
             </ul>
           </div>
-          {/* More group */}
           <div>
             <h3 className="text-xs uppercase text-slate-500 font-semibold pl-3">
               <span
@@ -318,12 +312,11 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                   return (
                     <React.Fragment>
                       <a
-                        href="#0"
-                        className={`block text-slate-200 truncate transition duration-150 ${
-                          open
-                            ? "hover:text-slate-200"
-                            : "hover:text-white hover:text-decoration-line"
-                        }`}
+                        href="javascript:void(0)"
+                        className={`block text-slate-200 truncate transition duration-150 ${open
+                          ? "hover:text-slate-200"
+                          : "hover:text-white hover:text-decoration-line"
+                          }`}
                         onClick={(e) => {
                           e.preventDefault();
                           sidebarExpanded
@@ -353,9 +346,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                           {/* Icon */}
                           <div className="flex shrink-0 ml-2">
                             <svg
-                              className={`w-3 h-3 shrink-0 ml-1 fill-current text-slate-400 ${
-                                open && "rotate-180"
-                              }`}
+                              className={`w-3 h-3 shrink-0 ml-1 fill-current text-slate-400 ${open && "rotate-180"
+                                }`}
                               viewBox="0 0 12 12"
                             >
                               <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
@@ -372,7 +364,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                               className="block text-slate-400 hover:text-slate-200 transition duration-150 truncate"
                             >
                               <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                Account
+                                Settings
                               </span>
                             </NavLink>
                           </li>
@@ -383,7 +375,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                               className="block text-slate-400 hover:text-slate-200 transition duration-150 truncate"
                             >
                               <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                Sign up
+                                Change Password
                               </span>
                             </NavLink>
                           </li>
@@ -394,7 +386,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                               className="block text-slate-400 hover:text-slate-200 transition duration-150 truncate"
                             >
                               <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                Reset Password
+                                Logout
                               </span>
                             </NavLink>
                           </li>

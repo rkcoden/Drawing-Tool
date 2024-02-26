@@ -11,7 +11,7 @@ import './charts/ChartjsConfig';
 
 // Import pages
 import Dashboard from './pages/Dashboard';
-
+import Standard from './pages/Standard';
 function App() {
 
   const location = useLocation();
@@ -26,6 +26,7 @@ function App() {
     <>
       <Routes>
         <Route exact path="/" element={<Dashboard />} />
+        <Route exact path="/drf/standard" element={<Standard />} />
       </Routes>
     </>
   );
